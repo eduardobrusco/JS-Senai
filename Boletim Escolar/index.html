@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Boletim Escolar</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #fff;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #fff;
+            color: #000000;
+            margin: 20px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📚 Boletim Escolar</h1>
+
+    <button onclick="gerarBoletim()">Gerar Boletim</button>
+
+    <div id="resultado"></div>
+
+    <!-- SCRIPT -->
+    <script>
+        function gerarBoletim() {
+
+            let alunos = [
+                [7, 8, 6],
+                [5, 4, 6],
+                [9, 9, 10],
+                [6, 7, 6]
+            ];
+
+            let resultadoHTML = "";
+
+            let totalAprovados = 0;
+            let maiorMedia = 0;
+            let menorMedia = 10;
+
+            for (let i = 0; i < alunos.length; i++) {
+
+                let notas = alunos[i];
+                let soma = 0;
+                let j = 0;
+
+                while (j < notas.length) {
+                    soma += notas[j];
+                    j++;
+                }
+
+                let media = soma / notas.length;
+                let classificacao = "";
+
+                if (media >= 9) {
+                    classificacao = "Excelente";
+                } else if (media >= 7) {
+                    classificacao = "Bom";
+                } else if (media >= 6) {
+                    classificacao = "Aprovado";
+                    totalAprovados++;
+                } else {
+                    classificacao = "Reprovado";
+                }
+
+                if (media > maiorMedia) maiorMedia = media;
+                if (media < menorMedia) menorMedia = media;
+
+                resultadoHTML += `Aluno ${i + 1}: Média ${media.toFixed(1)} → ${classificacao}<br>`;
+            }
+
+            resultadoHTML += `<hr>`;
+            resultadoHTML += `Total de aprovados: ${totalAprovados}<br>`;
+            resultadoHTML += `Maior média: ${maiorMedia.toFixed(1)}<br>`;
+            resultadoHTML += `Menor média: ${menorMedia.toFixed(1)}`;
+
+            document.getElementById("resultado").innerHTML = resultadoHTML;
+        }
+    </script>
+
+</body>
+</html>
