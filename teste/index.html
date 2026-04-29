@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>SafePass</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    .app {
+      background: rgba(0,0,0,0.2);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .fraca { color: #ff4d4d; }
+    .media { color: #ffd11a; }
+    .forte { color: #00ff99; }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+  <h1>🔐 SafePass</h1>
+  <p>Verifique sua senha</p>
+
+  <input type="text" id="senha" placeholder="Digite sua senha">
+
+  <br>
+  <button onclick="analisarSenha()">Analisar</button>
+
+  <div id="resultado" class="resultado"></div>
+</div>
+
+<script>
+  function analisarSenha() {
+    let senha = document.getElementById("senha").value;
+    let resultado = document.getElementById("resultado");
+
+    let forca = 0;
+
+    if (senha.length >= 6) forca++;
+    if (/[A-Z]/.test(senha)) forca++;
+    if (/[0-9]/.test(senha)) forca++;
+    if (/[^A-Za-z0-9]/.test(senha)) forca++;
+
+    if (senha === "") {
+      resultado.innerHTML = "Digite uma senha!";
+      resultado.className = "resultado";
+      return;
+    }
+
+    if (forca <= 1) {
+      resultado.innerHTML = "Senha FRACA ❌<br>Dica: use letras, números e símbolos";
+      resultado.className = "resultado fraca";
+    } 
+    else if (forca <= 3) {
+      resultado.innerHTML = "Senha MÉDIA ⚠️<br>Tente adicionar mais segurança";
+      resultado.className = "resultado media";
+    } 
+    else {
+      resultado.innerHTML = "Senha FORTE ✅<br>Boa segurança!";
+      resultado.className = "resultado forte";
+    }
+  }
+</script>
+
+</body>
+</html>
